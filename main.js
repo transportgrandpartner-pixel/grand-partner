@@ -80,23 +80,38 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
     
-    // Prosta obsługa formularza, bo to statyczny html dla Vercel
+    // Obsługa formularza przez Formsubmit (AJAX)
     const form = document.getElementById('contactForm');
     if(form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = form.querySelector('button');
             const originalText = btn.innerText;
             btn.innerText = 'Wysyłanie...';
             btn.disabled = true;
             
-            // Symulacja Vercel Functions/Forms Submit
-            setTimeout(() => {
-                alert('Dziękujemy za zapytanie! Skontaktujemy się tak szybko jak to możliwe.');
-                form.reset();
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Dziękujemy za zapytanie! Skontaktujemy się tak szybko jak to możliwe.');
+                    form.reset();
+                } else {
+                    alert('Wystąpił problem z wysłaniem wiadomości. Prosimy o kontakt telefoniczny.');
+                }
+            } catch (error) {
+                alert('Błąd połączenia z siecią. Spróbuj ponownie za chwilę.');
+            } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
-            }, 1000);
+            }
         });
     }
 });
