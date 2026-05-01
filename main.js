@@ -80,38 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
     
-    // Obsługa formularza przez Formsubmit (AJAX)
+    // Prosta obsługa w celu ułatwienia pierwszej aktywacji formularza na serwerach FormSubmit
+    // Po wciśnięciu wyślij, strona przekieruje Cię na adres strony aktywacyjnej na nowej karcie
     const form = document.getElementById('contactForm');
     if(form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        form.addEventListener('submit', () => {
             const btn = form.querySelector('button');
-            const originalText = btn.innerText;
             btn.innerText = 'Wysyłanie...';
-            btn.disabled = true;
-            
-            try {
-                const formData = new FormData(form);
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    alert('Dziękujemy za zapytanie! Skontaktujemy się tak szybko jak to możliwe.');
-                    form.reset();
-                } else {
-                    alert('Wystąpił problem z wysłaniem wiadomości. Prosimy o kontakt telefoniczny.');
-                }
-            } catch (error) {
-                alert('Błąd połączenia z siecią. Spróbuj ponownie za chwilę.');
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
         });
     }
 });
