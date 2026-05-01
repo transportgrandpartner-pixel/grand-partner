@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.setAttribute('aria-expanded', !isExpanded);
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
-        
+
         // Zabezpieczenie scrolla body gry otwarte menu
         document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
     };
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('appear');
                 // Jeśli chcesz odtwarzać animacje ciagle w gore/doł wyrzuć `unobserve`
-                observer.unobserve(entry.target); 
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -79,14 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dodaj wstępne opóźnienie dla płynniejszego załadowania
         observer.observe(el);
     });
-    
+
     // Prosta obsługa w celu ułatwienia pierwszej aktywacji formularza na serwerach FormSubmit
     // Po wciśnięciu wyślij, strona przekieruje Cię na adres strony aktywacyjnej na nowej karcie
     const form = document.getElementById('contactForm');
-    if(form) {
+    if (form) {
         form.addEventListener('submit', () => {
             const btn = form.querySelector('button');
-            btn.innerText = 'Wysyłanie...';
+            btn.innerText = 'Wysyłanie..';
         });
     }
 });
